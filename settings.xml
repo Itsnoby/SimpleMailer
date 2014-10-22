@@ -1,0 +1,5 @@
+<MailSettings>
+	<Address Host="smtp.gmail.com" Port="587" />
+	<SSL Enable="True" />
+	<Credentials Login="itsnoby@gmail.com" Password="******" />
+</MailSettings>
