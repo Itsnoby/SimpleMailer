@@ -108,9 +108,9 @@ namespace SimpleMailer.Mailer.Utils
 
                 mail.Body = body.ToString();
 
-
-                foreach (var attach in options.Attaches)
-                    mail.Attachments.Add(new Attachment(attach));
+                if(options.Attaches != null)
+                    foreach (var attach in options.Attaches)
+                        mail.Attachments.Add(new Attachment(attach));
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace SimpleMailer.Mailer.Utils
             try
             {
                 var doc = File.ReadAllText(file);
-                var regex = new Regex(".*<body>(.*)</body>.*");
+                var regex = new Regex("^.*?<.*?body.*?>(.*)</.*?body.*?>.*?$");
                 var match = regex.Match(doc.Replace("\r\n", ""));
                 if (match.Success)
                     content = match.Groups[1].Value;
