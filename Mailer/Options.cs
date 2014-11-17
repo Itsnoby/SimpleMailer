@@ -36,5 +36,8 @@ namespace SimpleMailer.Mailer
 
         [OptionArray('a', "attaches", HelpText = "Email attaches. Set full path to the files.")]
         public string[] Attaches { get; set; }
+
+        [OptionArray('i', "images", HelpText = "Add images to email which can be used in message body with -t option. Set full path to the files.")]
+        public string[] Images { get; set; }
     }
 }

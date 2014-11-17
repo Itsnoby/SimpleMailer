@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mailer\Utils\ImageAttachmentPath.cs" />
     <Compile Include="Mailer\Utils\MailUtilities.cs" />
     <Compile Include="Mailer\Options.cs" />
     <Compile Include="Program.cs" />

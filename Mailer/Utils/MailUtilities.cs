@@ -1,10 +1,12 @@
 ﻿#region Usages
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -101,16 +103,24 @@ namespace SimpleMailer.Mailer.Utils
 
                 mail.IsBodyHtml = true;
                 var body = new StringBuilder();
+
                 if (!string.IsNullOrEmpty(options.Text))
                    body.Append(string.Format("<p>{0}</p>", options.Text));
                 if (!string.IsNullOrEmpty(options.HtmlFile))
                     body.Append(string.Format("<div>{0}</div>", ExtractBodyFromHtml(options.HtmlFile)));
 
-                mail.Body = body.ToString();
-
                 if(options.Attaches != null)
                     foreach (var attach in options.Attaches)
                         mail.Attachments.Add(new Attachment(attach));
+
+                if (options.Images != null)
+                {
+                    var l = options.Images.Select(image => new ImageAttachmentPath(mail, image)).ToArray();
+                    body = new StringBuilder(string.Format(body.ToString(), l));
+                }
+
+                mail.Body = body.ToString();
+                    
             }
             catch (Exception e)
             {
@@ -131,12 +141,6 @@ namespace SimpleMailer.Mailer.Utils
                 var match = regex.Match(doc.Replace("\r\n", ""));
                 if (match.Success)
                     content = match.Groups[1].Value;
-
-//                var doc = XDocument.Load(file);
-//                if (!doc.Descendants("html").Any())
-//                    throw new Exception("HTML file doesn't contain HTML tag!");
-//                var body = doc.Element("html").Element("body");
-//                content = (body != null) ? body.Value : string.Empty;
             }
             catch (Exception e)
             {
