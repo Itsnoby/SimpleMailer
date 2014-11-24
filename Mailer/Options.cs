@@ -31,8 +31,8 @@ namespace SimpleMailer.Mailer
         [Option('t', "text", HelpText = "Message body.")]
         public string Text { get; set; }
 
-        [Option('h', "html", HelpText = "Path to HTMl document, its content will be added to message body. Set full path to the file. ")]
-        public string HtmlFile { get; set; }
+        [OptionArray('h', "html", HelpText = "Paths to HTMl documents, their content will be added to message body. Set full path to each file. ")]
+        public string[] HtmlFiles { get; set; }
 
         [OptionArray('a', "attaches", HelpText = "Email attaches. Set full path to the files.")]
         public string[] Attaches { get; set; }

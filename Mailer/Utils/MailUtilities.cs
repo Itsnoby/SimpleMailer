@@ -106,8 +106,9 @@ namespace SimpleMailer.Mailer.Utils
 
                 if (!string.IsNullOrEmpty(options.Text))
                    body.Append(string.Format("<p>{0}</p>", options.Text));
-                if (!string.IsNullOrEmpty(options.HtmlFile))
-                    body.Append(string.Format("<div>{0}</div>", ExtractBodyFromHtml(options.HtmlFile)));
+                if (options.HtmlFiles != null)
+                    foreach (var html in options.HtmlFiles)
+                        body.Append(string.Format("<div>{0}</div>", ExtractBodyFromHtml(html)));
 
                 if(options.Attaches != null)
                     foreach (var attach in options.Attaches)
